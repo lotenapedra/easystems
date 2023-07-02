@@ -5,7 +5,7 @@ import pandas as pd
 
 #
 # Side bar menu
-menu_option = st.sidebar.radio("Menu", ["Entrada", "Excluir Entrada","Visualizações","Requesição de Frete","Criar Usuário"])
+menu_option = st.sidebar.radio("Menu", ["Entrada", "Excluir Entrada","Visualizações","Requesição de Frete","Visualizar Requisicao"])
 
 if menu_option == "Entrada":
     exec(open("entrada.py").read())
@@ -20,10 +20,10 @@ if menu_option == "Visualizações":
     exec(open("visualizacao.py").read())
     
 if menu_option == "Requesição de Frete":
-    exec(open("valid_user_frete.py").read())
+    exec(open("frete_request.py").read())
     
-if menu_option == "Criar Usuário":
-    exec(open("loginadm.py").read())
+if menu_option == "Visualizar Requisicao":
+    exec(open("visualizador_frete.py").read())
         
 
 if menu_option == "Cadastros":
