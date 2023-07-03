@@ -19,7 +19,7 @@ if menu_option == "Excluir Entrada":
 if menu_option == "Visualizações":
     exec(open("visualizacao.py").read())
     
-if menu_option == "Requesição de Frete":
+if menu_option == "Requisição de Frete":
     exec(open("frete_request.py").read())
     
 if menu_option == "Visualizar Requisicao":
