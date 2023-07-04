@@ -20,7 +20,7 @@ if menu_option == "Visualizações":
     exec(open("visualizacao.py").read())
     
 if menu_option == "Requisição de Frete":
-    exec(open("frete_request.py").read())
+    exec(open("valid_user_frete.py").read())
     
 if menu_option == "Visualizar Requisicao":
     exec(open("visualizador_frete.py").read())
