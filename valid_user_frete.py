@@ -24,7 +24,7 @@ def tela_login():
             # Abra o arquivo main.py em um novo navegador
             webbrowser.open_new("https://easystems-0ixw0ptprokl.streamlit.app")
             # Encerre o aplicativo atual para evitar conflitos entre os servidores do Streamlit
-            raise SystemExit
+           
         else:
             st.error("Credenciais inválidas!")
 
