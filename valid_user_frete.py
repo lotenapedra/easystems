@@ -22,7 +22,7 @@ def tela_login():
         if resultado:
             st.success("Login realizado com sucesso!")
             # Abra o arquivo main.py em um novo navegador
-            webbrowser.open("https://easystems-0ixw0ptprokl.streamlit.app/")
+            webbrowser.open_new("https://easystems-0ixw0ptprokl.streamlit.app/")
             # Encerre o aplicativo atual para evitar conflitos entre os servidores do Streamlit
             raise SystemExit
         else:
