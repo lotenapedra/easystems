@@ -10,6 +10,8 @@ def verifica_login(usuario, senha):
     conn.close()
     return resultado is not None
 
+
+
 # Tela de login
 def tela_login():
     st.title("Acesso Solicitante Frete")
@@ -18,9 +20,21 @@ def tela_login():
     if st.button("Login"):
         if verifica_login(usuario, senha):
             st.success("Login realizado com sucesso!")
-            st.markdown("[Clique aqui para acessar o sistema](https://easystems-0ixw0ptprokl.streamlit.app/)")
+            if st.button("Acessar o sistema"):
+                abrir_sistema()
         else:
             st.error("Credenciais inválidas!")
 
-tela_login()
+def abrir_sistema():
+    link = "https://easystems-0ixw0ptprokl.streamlit.app/"
+    js = f"window.open('{link}')"  # Abrir o link em uma nova guia do navegador
+    html = '<img src onerror="{}">'.format(js)  # Executar o JavaScript
+    st.markdown(html, unsafe_allow_html=True)
 
+# Função para verificar as credenciais de login
+def verifica_login(usuario, senha):
+    # Implemente a lógica de verificação de login aqui
+    # Retorne True se as credenciais forem válidas, caso contrário, retorne False
+    return True  # Altere conforme sua lógica de verificação
+
+tela_login()
