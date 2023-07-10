@@ -33,7 +33,7 @@ def tela_login():
     if st.button("Login"):
         if verifica_login(usuario, senha):
             st.success("Login realizado com sucesso!")
-            st.markdown("[Clique aqui para acessar o sistema](https://easystems-0ixw0ptprokl.streamlit.app/)")
+            st.markdown("[Acesso Ambiente Fretes](https://easystems-0ixw0ptprokl.streamlit.app/)")
         else:
             st.error("Credenciais inválidas!")
 
