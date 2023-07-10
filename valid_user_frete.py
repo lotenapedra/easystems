@@ -14,16 +14,24 @@ def verifica_login(usuario, senha):
 
 # Tela de login
 
+import streamlit as st
+
 def tela_login():
-st.title("Acesso Solicitante Frete")
-usuario = st.text_input("Usuário")
-senha = st.text_input("Senha", type="password")
-if st.button("Login"):
-resultado = verifica_login(usuario, senha)
-if resultado:
-st.success("Login realizado com sucesso!")
-st.markdown("[Clique aqui para acessar o sistema](https://easystems-0ixw0ptprokl.streamlit.app/)")
-else:
-st.error("Credenciais inválidas!")
+    st.title("Acesso Solicitante Frete")
+    usuario = st.text_input("Usuário")
+    senha = st.text_input("Senha", type="password")
+    if st.button("Login"):
+        resultado = verifica_login(usuario, senha)
+        if resultado:
+            st.success("Login realizado com sucesso!")
+            st.markdown("[Clique aqui para acessar o sistema](https://easystems-0ixw0ptprokl.streamlit.app/)")
+        else:
+            st.error("Credenciais inválidas!")
+
+def verifica_login(usuario, senha):
+    # Implemente a lógica de verificação de login aqui
+    # Retorne True se as credenciais forem válidas, caso contrário, retorne False
+    return True  # Altere conforme sua lógica de verificação
 
 tela_login()
+
