@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import sqlite3
 import pandas as pd
-st.set_page_config(page_title='easystems', favicon='https://icons8.com/icon/sH5IBgX3H7wP/truck')
+st.set_page_config(page_title='easystems')
 
 #
 # Side bar menu
