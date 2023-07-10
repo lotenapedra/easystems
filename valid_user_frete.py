@@ -13,20 +13,27 @@ def verifica_login(usuario, senha):
     return resultado
 
 # Tela de login
+
+
 def tela_login():
     st.title("Acesso Solicitante Frete")
-    usuario = st.text_input("Usuario")
+    usuario = st.text_input("Usuário")
     senha = st.text_input("Senha", type="password")
     if st.button("Login"):
         resultado = verifica_login(usuario, senha)
         if resultado:
             st.success("Login realizado com sucesso!")
-            # Abra o arquivo main.py em um novo navegador
-            webbrowser.open("https://easystems-0ixw0ptprokl.streamlit.app/")
-            # Encerre o aplicativo atual para evitar conflitos entre os servidores do Streamlit
-           
+            st.markdown("[Clique aqui para acessar o sistema](https://easystems-0ixw0ptprokl.streamlit.app/)")
         else:
             st.error("Credenciais inválidas!")
+
+def verifica_login(usuario, senha):
+    # Implemente a lógica de verificação de login aqui
+    # Retorne True se as credenciais forem válidas, caso contrário, retorne False
+    return True  # Altere conforme sua lógica de verificação
+
+tela_login()
+
 
 # Executa a tela de login
 tela_login()
