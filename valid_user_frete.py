@@ -27,10 +27,6 @@ def tela_login():
         else:
             st.error("Credenciais inválidas!")
 
-def verifica_login(usuario, senha):
-    # Implemente a lógica de verificação de login aqui
-    # Retorne True se as credenciais forem válidas, caso contrário, retorne False
-    return True  # Altere conforme sua lógica de verificação
 
 tela_login()
 
