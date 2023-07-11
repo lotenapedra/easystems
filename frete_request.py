@@ -5,6 +5,8 @@ from datetime import date
 
 # Desativa a verificação SSL globalmente
 requests.packages.urllib3.disable_warnings()
+streamlit run gestao_fretes.py --server.enableCORS=false --browser.serverAddress=0.0.0.0 --browser.gatherUsageStats=false --ssl-version=TLSv1
+
 
 # Função para obter os municípios de um estado específico
 def obter_municipios(estado):
