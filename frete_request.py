@@ -4,14 +4,6 @@ import sqlite3
 from datetime import date
 st.title('Solicitar um Frete')
 
-def local_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-
-local_css("style.css")
-
-
-
 # Função para obter os municípios de um estado específico
 def obter_municipios(estado):
     url = f'https://servicodados.ibge.gov.br/api/v1/localidades/estados/{estado}/municipios'
