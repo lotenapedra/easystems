@@ -4,10 +4,6 @@ import sqlite3
 from datetime import date
 st.title('Solicitar um Frete')
 
-
-
-
-
 # Função para obter os municípios de um estado específico
 def obter_municipios(estado):
     url = f'https://servicodados.ibge.gov.br/api/v1/localidades/estados/{estado}/municipios'
