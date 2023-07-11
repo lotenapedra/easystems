@@ -3,62 +3,55 @@ import streamlit as st
 import sqlite3
 from datetime import date
 st.title('Solicitar um Frete')
-def consulta_cep(cep):
-    url = f"https://viacep.com.br/ws/{cep}/json/"
+
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+local_css("style.css")
+
+
+
+# Função para obter os municípios de um estado específico
+def obter_municipios(estado):
+    url = f'https://servicodados.ibge.gov.br/api/v1/localidades/estados/{estado}/municipios'
     response = requests.get(url)
-    data = response.json()
-
-    if "erro" not in data:
-        cidade = data["localidade"]
-        return cidade
+    if response.status_code == 200:
+        municipios = [municipio['nome'] for municipio in response.json()]
+        return municipios
     else:
-        st.write("CEP não encontrado.")
-        return None
+        return []
 
-
+# Obtém a lista de estados
+response = requests.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+if response.status_code == 200:
+    estados = [estado['sigla'] for estado in response.json()]
+else:
+    estados = []
 
 today = date.today()
+data_solicitacao = st.date_input("Data da solicitação", value=today,disabled=True)
 empresa_origem = st.selectbox('Empresa Origem/local de Coleta', ['Clean Plastic', 'Clean Poa', 'Clean Jundiai', 'Clean Bottle', 'Clean Fortal', 'Raposo Plasticos', 'Raposo Minas', 'Fornecedor PF', 'Outro'])
 
 col1, col2 = st.columns(2)
 today = date.today()
 
-# Verifica se o estado do campo de CEP de origem já foi definido
-if "cep_origem" not in st.session_state:
-    st.session_state.cep_origem = ""
-if "cep_destino" not in st.session_state:
-    st.session_state.cep_destino = ""
-if "cidade_origem" not in st.session_state:
-    st.session_state.cidade_origem = ""
-if "cidade_destino" not in st.session_state:
-    st.session_state.cidade_destino = ""
-
 with col1:
-    cep_origem = st.text_input('CEP Origem', value=st.session_state.cep_origem)
-    cidade_origem = st.session_state.cidade_origem
     
-    if st.button("Consultar Origem"):
-        cidade_origem = consulta_cep(cep_origem)
-        if cidade_origem is not None:
-            st.write('Cidade Origem:', cidade_origem)
-            st.session_state.cep_origem = cep_origem  # Armazena o valor do CEP de origem
-            st.session_state.cidade_origem = cidade_origem  # Armazena a cidade de origem
-    cep_destino = st.text_input('CEP Destino', value=st.session_state.cep_destino)
-    cidade_destino = st.session_state.cidade_destino
-    if st.button("Consultar Destino"):
-        cidade_destino = consulta_cep(cep_destino)
-        if cidade_destino is not None:
-            st.write('Cidade Destino:', cidade_destino)
-            st.session_state.cep_destino = cep_destino  # Armazena o valor do CEP de destino
-            st.session_state.cidade_destino = cidade_destino  # Armazena a cidade de destino
-        elif cidade_origem is not None:
-            st.write('Cidade Origem:', cidade_origem)  # Mantém a cidade de origem quando a consulta do destino falha
+    estado_origem = st.selectbox('Selecione o estado de origem', estados)
+    municipios_origem = obter_municipios(estado_origem)
+    cidade_origem = st.selectbox('Selecione a cidade de origem', municipios_origem)
+    estado_destino = st.selectbox('Selecione o estado de destino', estados)
+    municipios_destino = obter_municipios(estado_destino)
+    cidade_destino = st.selectbox('Selecione a cidade de destino', municipios_destino)
 
 with col2:
+    
+
     data_coleta = st.date_input("Data da coleta", value=today, key="data_input")
     data_entrega = st.date_input("Data da Entrega", value=today, key="")
     tipo_veiculo = st.selectbox("Tipo de Veiculo", ["Truck-Side", "Carreta-Side", "Truck-Grade Baixa", "Carreta-Grade Baixa", "Carreta Graneleira", "Container"])             
-Observacao = st.text_area("Observacoes")
+observacao = st.text_area("Observacoes")
 
 # Save button
 if st.button("Salvar"):
@@ -71,42 +64,45 @@ if st.button("Salvar"):
     # Create the 'frete' table if it doesn't exist
     cursor.execute('''CREATE TABLE IF NOT EXISTS frete (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        data_solicitacao TEXT,
                         empresa_origem TEXT,
-                        cep_origem TEXT,
+                        estado_origem TEXT,
                         cidade_origem TEXT,
-                        cep_destino TEXT,
+                        estado_destino TEXT,
                         cidade_destino TEXT,
+                        tipo_veiculo TEXT,
                         data_coleta TEXT,
                         data_entrega TEXT,
-                        tipo_veiculo TEXT,
                         observacao TEXT
                     )''')
 
     # Get the values from the fields
+    data_solicitacao_value = date.today().strftime("%Y-%m-%d")
     empresa_origem_value = empresa_origem
-    cep_origem_value = cep_origem
-    cidade_origem_value = st.session_state.cidade_origem  # Utiliza a cidade de origem armazenada em st.session_state
-    cep_destino_value = cep_destino
-    cidade_destino_value = st.session_state.cidade_destino  # Utiliza a cidade de destino armazenada em st.session_state
+    estado_origem_value = estado_origem
+    cidade_origem_value = cidade_origem
+    estado_destino_value = estado_destino
+    cidade_destino_value = cidade_destino
+    tipo_veiculo_value = tipo_veiculo
     data_coleta_value = data_coleta.strftime("%Y-%m-%d")
     data_entrega_value = data_entrega.strftime("%Y-%m-%d")
-    tipo_veiculo_value = tipo_veiculo
-    observacao_value = Observacao
+    observacao_value = observacao
 
     # Insert the values into the 'frete' table
     cursor.execute('''INSERT INTO frete (
+                        data_solicitacao,
                         empresa_origem,
-                        cep_origem,
+                        estado_origem,
                         cidade_origem,
-                        cep_destino,
+                        estado_destino,
                         cidade_destino,
+                        tipo_veiculo,
                         data_coleta,
                         data_entrega,
-                        tipo_veiculo,
                         observacao
                     )
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                    (empresa_origem_value, cep_origem_value, cidade_origem_value, cep_destino_value, cidade_destino_value, data_coleta_value, data_entrega_value, tipo_veiculo_value, observacao_value))
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                    (data_solicitacao_value, empresa_origem_value, estado_origem_value, cidade_origem_value, estado_destino_value, cidade_destino_value, tipo_veiculo_value, data_coleta_value, data_entrega_value, observacao_value))
 
     # Commit the changes and close the connection
     conn.commit()
