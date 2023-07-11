@@ -11,6 +11,8 @@ st.title('Solicitar um Frete')
 def obter_municipios(estado):
     url = f'https://servicodados.ibge.gov.br/api/v1/localidades/estados/{estado}/municipios'
     response = requests.get(url)
+    response = requests.get(url, verify=False)
+
     if response.status_code == 200:
         municipios = [municipio['nome'] for municipio in response.json()]
         return municipios
