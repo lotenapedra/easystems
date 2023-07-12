@@ -3,7 +3,7 @@ import csv
 import streamlit as st
 from datetime import date
 
-st.title('Solicitar um Frete')
+st.title('Solicitar um Embarque')
 
 # Função para obter os municípios de um estado específico
 def obter_municipios(estado):
