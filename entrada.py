@@ -35,10 +35,11 @@ with open(arquivo_csv, 'r', newline='', encoding='utf-8') as file:
 col1, col2 = st.columns(2)
 with col1:
     nome_completo = st.text_input("Nome Completo:")
-    tipo_veiculo = st.selectbox('Tipo de Veiculo:', ["Truck-Side", "Carreta-Side", "Truck-Grade Baixa", "Carreta-Grade Baixa", "Carreta Graneleira", "Container"])
+    tipo_veiculo = st.selectbox('Tipo de Veiculo:', ["Truck-Side", "Carreta-Side", "Truck-Grade Baixa", "Carreta-Grade Baixa", "Carreta Graneleira", "Container","Bitrem","Bitruck"])
     motivo = st.selectbox('Motivo:', ['Carregar', 'Descarregar'])
     data = st.date_input("Data Entrada", value=date.today(), key="data_input")
     placa = st.text_input('Placa do Veiculo:')
+    status_veiculo = st.selectbox('Status Veiculo',['Proprio','Terceiro','Transportadora'])
 
 with col2:
     empresa_origem = st.selectbox('Empresa Origem', ['Clean Plastic', 'Clean Poa', 'Clean Jundiai', 'Clean Bottle', 'Clean Fortal', 'Raposo Plasticos', 'Raposo Minas', 'Fornecedor PF', 'Outro'])
@@ -47,7 +48,7 @@ with col2:
     cidade_origem = st.selectbox('Selecione a cidade de origem', municipios_origem)
     telefone = st.text_input('Telefone')
     frete_retono = st.selectbox('Possuem Frete Retorno?', ['Sim', 'Nao'])
-    status_veiculo = st.selectbox('Status Veiculo',['Proprio','Terceiro','Transportadora'])
+    
 
 info = st.text_area('Info. Complementar')
 
