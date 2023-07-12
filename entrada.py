@@ -2,8 +2,9 @@ import sqlite3
 import csv
 import streamlit as st
 from datetime import date
-#data de entrada não pode ser alterada!
-data = st.date_input("Data Entrada", value=date.today(),disabled=True)
+
+# data de entrada não pode ser alterada!
+data = st.date_input("Data Entrada", value=date.today(), disabled=True)
 Local_Entrada = st.selectbox('Local de entrada', ['Clean Plastic', 'Clean Poa', 'Clean Jundiai', 'Clean Bottle', 'Clean Fortal', 'Raposo Plasticos', 'Raposo Minas', 'Fornecedor PF', 'Outro'])
 
 # Função para obter os municípios de um estado específico
@@ -49,12 +50,8 @@ with col2:
     cidade_origem = st.selectbox('Selecione a cidade de origem', municipios_origem)
     telefone = st.text_input('Telefone')
     frete_retono = st.selectbox('Possuem Frete Retorno?', ['Sim', 'Nao'])
-    
 
 info = st.text_area('Info. Complementar')
-
-
-
 
 if st.button("Salvar"):
     # Connect to the database or create a new one if it doesn't exist
@@ -67,7 +64,6 @@ if st.button("Salvar"):
     cursor.execute('''CREATE TABLE IF NOT EXISTS entrada (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         local TEXT,
-                        cep_origem TEXT,
                         cidade_origem TEXT,
                         uf_origem TEXT,
                         nome_completo TEXT,
@@ -82,10 +78,9 @@ if st.button("Salvar"):
                     )''')
 
     # Get the values from the fields
-    local_value = local
-    cep_origem_value = cep_origem
-    cidade_origem_value = st.session_state.cidade_origem  # Utiliza a cidade de origem armazenada em st.session_state
-    uf_origem_value = st.session_state.uf_origem  # Utiliza a UF de origem armazenada em st.session_state
+    local_value = Local_Entrada
+    cidade_origem_value = cidade_origem
+    uf_origem_value = estado_origem
     nome_completo_value = nome_completo
     tipo_veiculo_value = tipo_veiculo
     motivo_value = motivo
@@ -99,7 +94,6 @@ if st.button("Salvar"):
     # Insert the values into the 'entrada' table
     cursor.execute('''INSERT INTO entrada (
                         local,
-                        cep_origem,
                         cidade_origem,
                         uf_origem,
                         nome_completo,
@@ -112,24 +106,24 @@ if st.button("Salvar"):
                         frete_retorno,
                         info_complementar
                     )
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                    (
-                        local_value,
-                        cep_origem_value,
-                        cidade_origem_value,
-                        uf_origem_value,
-                        nome_completo_value,
-                        tipo_veiculo_value,
-                        motivo_value,
-                        data_value,
-                        empresa_origem_value,
-                        telefone_value,
-                        placa_value,
-                        frete_retorno_value,
-                        info_complementar_value
-                    ))
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                   (
+                       local_value,
+                       cidade_origem_value,
+                       uf_origem_value,
+                       nome_completo_value,
+                       tipo_veiculo_value,
+                       motivo_value,
+                       data_value,
+                       empresa_origem_value,
+                       telefone_value,
+                       placa_value,
+                       frete_retorno_value,
+                       info_complementar_value
+                   ))
 
     # Commit the changes and close the connection
     conn.commit()
     conn.close()
     st.success("Dados salvos com sucesso!")
+
