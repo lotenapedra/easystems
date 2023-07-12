@@ -2,7 +2,8 @@ import sqlite3
 import csv
 import streamlit as st
 from datetime import date
-
+#data de entrada não pode ser alterada!
+data = st.date_input("Data Entrada", value=date.today(),disabled=True)
 Local_Entrada = st.selectbox('Local de entrada', ['Clean Plastic', 'Clean Poa', 'Clean Jundiai', 'Clean Bottle', 'Clean Fortal', 'Raposo Plasticos', 'Raposo Minas', 'Fornecedor PF', 'Outro'])
 
 # Função para obter os municípios de um estado específico
@@ -37,7 +38,7 @@ with col1:
     nome_completo = st.text_input("Nome Completo:")
     tipo_veiculo = st.selectbox('Tipo de Veiculo:', ["Truck-Side", "Carreta-Side", "Truck-Grade Baixa", "Carreta-Grade Baixa", "Carreta Graneleira", "Container","Bitrem","Bitruck"])
     motivo = st.selectbox('Motivo:', ['Carregar', 'Descarregar'])
-    data = st.date_input("Data Entrada", value=date.today(), key="data_input")
+    
     placa = st.text_input('Placa do Veiculo:')
     status_veiculo = st.selectbox('Status Veiculo',['Proprio','Terceiro','Transportadora'])
 
