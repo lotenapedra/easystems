@@ -33,9 +33,7 @@ with open(arquivo_csv, 'r', newline='', encoding='utf-8') as file:
 
 
 with col1:
-    estado_origem = st.selectbox('Selecione o estado de origem', estados)
-    municipios_origem = obter_municipios(estado_origem)
-    cidade_origem = st.selectbox('Selecione a cidade de origem', municipios_origem)
+    
     
     nome_completo = st.text_input("Nome Completo:")
     tipo_veiculo = st.selectbox('Tipo de Veiculo:', ["Truck-Side", "Carreta-Side", "Truck-Grade Baixa", "Carreta-Grade Baixa", "Carreta Graneleira", "Container"])
