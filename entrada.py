@@ -4,6 +4,32 @@ import streamlit as st
 from datetime import date
 
 Local_Entrada = st.selectbox('Local de entrada', ['Clean Plastic', 'Clean Poa', 'Clean Jundiai', 'Clean Bottle', 'Clean Fortal', 'Raposo Plasticos', 'Raposo Minas', 'Fornecedor PF', 'Outro'])
+# Função para obter os municípios de um estado específico
+def obter_municipios(estado):
+    municipios = []
+
+    # Caminho para o arquivo CSV local
+    arquivo_csv = 'dados.csv'
+
+    with open(arquivo_csv, 'r', newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file, delimiter=';')
+        for row in reader:
+            if 'UF' in row and row['UF'] == estado:
+                municipios.append(row['Município'])
+
+    return municipios
+
+# Obtém a lista de estados
+estados = []
+arquivo_csv = 'dados.csv'
+
+with open(arquivo_csv, 'r', newline='', encoding='utf-8') as file:
+    reader = csv.DictReader(file, delimiter=';')
+    for row in reader:
+        if 'UF' in row:
+            estado = row['UF']
+            if estado not in estados:
+                estados.append(estado)
 
 
 with col1:
