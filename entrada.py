@@ -4,6 +4,7 @@ import streamlit as st
 from datetime import date
 
 Local_Entrada = st.selectbox('Local de entrada', ['Clean Plastic', 'Clean Poa', 'Clean Jundiai', 'Clean Bottle', 'Clean Fortal', 'Raposo Plasticos', 'Raposo Minas', 'Fornecedor PF', 'Outro'])
+
 # Função para obter os municípios de um estado específico
 def obter_municipios(estado):
     municipios = []
@@ -33,22 +34,19 @@ with open(arquivo_csv, 'r', newline='', encoding='utf-8') as file:
 
 col1, col2 = st.columns(2)
 with col1:
-    
-    
     nome_completo = st.text_input("Nome Completo:")
     tipo_veiculo = st.selectbox('Tipo de Veiculo:', ["Truck-Side", "Carreta-Side", "Truck-Grade Baixa", "Carreta-Grade Baixa", "Carreta Graneleira", "Container"])
     motivo = st.selectbox('Motivo:', ['Carregar', 'Descarregar'])
-    data = st.date_input("Data Entrada", value=today, key="data_input")
+    data = st.date_input("Data Entrada", value=date.today(), key="data_input")
 
 with col2:
     empresa_origem = st.selectbox('Empresa Origem', ['Clean Plastic', 'Clean Poa', 'Clean Jundiai', 'Clean Bottle', 'Clean Fortal', 'Raposo Plasticos', 'Raposo Minas', 'Fornecedor PF', 'Outro'])
-
     telefone = st.text_input('Telefone')
     placa = st.text_input('Placa do Veiculo:')
     frete_retono = st.selectbox('Possuem Frete Retorno?', ['Sim', 'Nao'])
-    
 
 info = st.text_area('Info. Complementar')
+
 
 
 
