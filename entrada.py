@@ -47,7 +47,7 @@ with col2:
     cidade_origem = st.selectbox('Selecione a cidade de origem', municipios_origem)
     telefone = st.text_input('Telefone')
     frete_retono = st.selectbox('Possuem Frete Retorno?', ['Sim', 'Nao'])
-    status_veiculo = st.selectbox('Status Veiculo',['Proprio','Terceiro",'Transportadora'])
+    status_veiculo = st.selectbox('Status Veiculo',['Proprio','Terceiro','Transportadora'])
 
 info = st.text_area('Info. Complementar')
 
