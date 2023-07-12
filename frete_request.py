@@ -1,40 +1,45 @@
-import requests
-import streamlit as st
 import sqlite3
+import csv
+import streamlit as st
 from datetime import date
+
 st.title('Solicitar um Frete')
-
-
-
 
 # Função para obter os municípios de um estado específico
 def obter_municipios(estado):
-    url = f'https://servicodados.ibge.gov.br/api/v1/localidades/estados/{estado}/municipios'
-    response = requests.get(url)
-    response = requests.get(url, verify=False)
+    municipios = []
 
-    if response.status_code == 200:
-        municipios = [municipio['nome'] for municipio in response.json()]
-        return municipios
-    else:
-        return []
+    # Caminho para o arquivo CSV local
+    arquivo_csv = 'dados.csv'
+
+    with open(arquivo_csv, 'r', newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file, delimiter=';')
+        for row in reader:
+            if 'UF' in row and row['UF'] == estado:
+                municipios.append(row['Município'])
+
+    return municipios
 
 # Obtém a lista de estados
-response = requests.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-if response.status_code == 200:
-    estados = [estado['sigla'] for estado in response.json()]
-else:
-    estados = []
+estados = []
+arquivo_csv = 'dados.csv'
+
+with open(arquivo_csv, 'r', newline='', encoding='utf-8') as file:
+    reader = csv.DictReader(file, delimiter=';')
+    for row in reader:
+        if 'UF' in row:
+            estado = row['UF']
+            if estado not in estados:
+                estados.append(estado)
 
 today = date.today()
-data_solicitacao = st.date_input("Data da solicitação", value=today,disabled=True)
+data_solicitacao = st.date_input("Data da solicitação", value=today, disabled=True)
 empresa_origem = st.selectbox('Empresa Origem/local de Coleta', ['Clean Plastic', 'Clean Poa', 'Clean Jundiai', 'Clean Bottle', 'Clean Fortal', 'Raposo Plasticos', 'Raposo Minas', 'Fornecedor PF', 'Outro'])
 
 col1, col2 = st.columns(2)
 today = date.today()
 
 with col1:
-    
     estado_origem = st.selectbox('Selecione o estado de origem', estados)
     municipios_origem = obter_municipios(estado_origem)
     cidade_origem = st.selectbox('Selecione a cidade de origem', municipios_origem)
@@ -43,11 +48,9 @@ with col1:
     cidade_destino = st.selectbox('Selecione a cidade de destino', municipios_destino)
 
 with col2:
-    
-
     data_coleta = st.date_input("Data da coleta", value=today, key="data_input")
     data_entrega = st.date_input("Data da Entrega", value=today, key="")
-    tipo_veiculo = st.selectbox("Tipo de Veiculo", ["Truck-Side", "Carreta-Side", "Truck-Grade Baixa", "Carreta-Grade Baixa", "Carreta Graneleira", "Container"])             
+    tipo_veiculo = st.selectbox("Tipo de Veiculo", ["Truck-Side", "Carreta-Side", "Truck-Grade Baixa", "Carreta-Grade Baixa", "Carreta Graneleira", "Container"])
 observacao = st.text_area("Observacoes")
 
 # Save button
