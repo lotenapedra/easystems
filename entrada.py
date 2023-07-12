@@ -46,6 +46,7 @@ with col2:
     telefone = st.text_input('Telefone')
     placa = st.text_input('Placa do Veiculo:')
     frete_retono = st.selectbox('Possuem Frete Retorno?', ['Sim', 'Nao'])
+    
 
 info = st.text_area('Info. Complementar')
 
