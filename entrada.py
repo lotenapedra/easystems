@@ -31,7 +31,7 @@ with open(arquivo_csv, 'r', newline='', encoding='utf-8') as file:
             if estado not in estados:
                 estados.append(estado)
 
-
+col1, col2 = st.columns(2)
 with col1:
     
     
