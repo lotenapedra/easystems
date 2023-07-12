@@ -63,62 +63,62 @@ if st.button("Salvar"):
     # Create the 'entrada' table if it doesn't exist
     cursor.execute('''CREATE TABLE IF NOT EXISTS entrada (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        local TEXT,
-                        cidade_origem TEXT,
-                        uf_origem TEXT,
-                        nome_completo TEXT,
-                        tipo_veiculo TEXT,
-                        motivo TEXT,
                         data TEXT,
+                        estado_origem TEXT,
+                        cidade_origem TEXT,
                         empresa_origem TEXT,
-                        telefone TEXT,
-                        placa TEXT,
+                        motivo TEXT,
+                        tipo_veiculo TEXT,
                         frete_retorno TEXT,
+                        status_veiculo TEXT,
+                        placa TEXT,
+                        nome_completo TEXT,
+                        telefone TEXT,
                         info_complementar TEXT
                     )''')
 
     # Get the values from the fields
-    local_value = Local_Entrada
-    cidade_origem_value = cidade_origem
-    uf_origem_value = estado_origem
-    nome_completo_value = nome_completo
-    tipo_veiculo_value = tipo_veiculo
-    motivo_value = motivo
     data_value = data.strftime("%Y-%m-%d")
+    estado_origem_value = estado_origem
+    cidade_origem_value = cidade_origem
     empresa_origem_value = empresa_origem
-    telefone_value = telefone
-    placa_value = placa
+    motivo_value = motivo
+    tipo_veiculo_value = tipo_veiculo
     frete_retorno_value = frete_retono
+    status_veiculo_value = status_veiculo
+    placa_value = placa
+    nome_completo_value = nome_completo
+    telefone_value = telefone
     info_complementar_value = info
 
     # Insert the values into the 'entrada' table
     cursor.execute('''INSERT INTO entrada (
-                        local,
-                        cidade_origem,
-                        uf_origem,
-                        nome_completo,
-                        tipo_veiculo,
-                        motivo,
                         data,
+                        estado_origem,
+                        cidade_origem,
                         empresa_origem,
-                        telefone,
-                        placa,
+                        motivo,
+                        tipo_veiculo,
                         frete_retorno,
+                        status_veiculo,
+                        placa,
+                        nome_completo,
+                        telefone,
                         info_complementar
                     )
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
                    (
-                       local_value,
-                       cidade_origem_value,
-                       uf_origem_value,
-                       nome_completo_value,
-                       tipo_veiculo_value,
-                       motivo_value,
                        data_value,
+                       estado_origem_value,
+                       cidade_origem_value,
                        empresa_origem_value,
-                       telefone_value,
-                       placa_value,
+                       motivo_value,
+                       tipo_veiculo_value,
                        frete_retorno_value,
+                       status_veiculo_value,
+                       placa_value,
+                       nome_completo_value,
+                       telefone_value,
                        info_complementar_value
                    ))
 
@@ -126,4 +126,3 @@ if st.button("Salvar"):
     conn.commit()
     conn.close()
     st.success("Dados salvos com sucesso!")
-
