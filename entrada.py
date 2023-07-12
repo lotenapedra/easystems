@@ -2,6 +2,8 @@ import sqlite3
 import csv
 import streamlit as st
 from datetime import date
+
+Local_Entrada = st.selectbox('Local de entrada', ['Clean Plastic', 'Clean Poa', 'Clean Jundiai', 'Clean Bottle', 'Clean Fortal', 'Raposo Plasticos', 'Raposo Minas', 'Fornecedor PF', 'Outro'])
 # Função para obter os municípios de um estado específico
 def obter_municipios(estado):
     municipios = []
@@ -28,7 +30,8 @@ with open(arquivo_csv, 'r', newline='', encoding='utf-8') as file:
             estado = row['UF']
             if estado not in estados:
                 estados.append(estado)
-Local_Entrada = st.selectbox('Local de entrada', ['Clean Plastic', 'Clean Poa', 'Clean Jundiai', 'Clean Bottle', 'Clean Fortal', 'Raposo Plasticos', 'Raposo Minas', 'Fornecedor PF', 'Outro'])
+                
+
 with col1:
     estado_origem = st.selectbox('Selecione o estado de origem', estados)
     municipios_origem = obter_municipios(estado_origem)
