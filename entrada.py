@@ -1,7 +1,7 @@
-import streamlit as st
 import sqlite3
+import csv
+import streamlit as st
 from datetime import date
-import requests
 # Função para obter os municípios de um estado específico
 def obter_municipios(estado):
     municipios = []
