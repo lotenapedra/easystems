@@ -2,48 +2,38 @@ import streamlit as st
 import sqlite3
 from datetime import date
 import requests
+# Função para obter os municípios de um estado específico
+def obter_municipios(estado):
+    municipios = []
 
-# Função de consulta de CEP
-def consulta_cep(cep):
-    url = f"https://viacep.com.br/ws/{cep}/json/"
-    response = requests.get(url)
-    data = response.json()
+    # Caminho para o arquivo CSV local
+    arquivo_csv = 'dados.csv'
 
-    if "erro" not in data:
-        cidade = data["localidade"]
-        uf = data["uf"]
-        return cidade, uf
-    else:
-        st.write("CEP não encontrado.")
-        return None, None
+    with open(arquivo_csv, 'r', newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file, delimiter=';')
+        for row in reader:
+            if 'UF' in row and row['UF'] == estado:
+                municipios.append(row['Município'])
 
-st.title('Entrada')
-local = st.selectbox('Local', ['Clean Plastic', 'Clean Poa', 'Clean Jundiai', 'Clean Bottle', 'Clean Fortal', 'Raposo Plasticos', 'Raposo Minas', 'Fornecedor PF', 'Outro'])
+    return municipios
 
-col1, col2 = st.columns(2)
-today = date.today()
+# Obtém a lista de estados
+estados = []
+arquivo_csv = 'dados.csv'
 
-# Verifica se o estado do campo de CEP de origem já foi definido
-if "cep_origem" not in st.session_state:
-    st.session_state.cep_origem = ""
-if "cidade_origem" not in st.session_state:
-    st.session_state.cidade_origem = ""
-if "uf_origem" not in st.session_state:
-    st.session_state.uf_origem = ""
-
+with open(arquivo_csv, 'r', newline='', encoding='utf-8') as file:
+    reader = csv.DictReader(file, delimiter=';')
+    for row in reader:
+        if 'UF' in row:
+            estado = row['UF']
+            if estado not in estados:
+                estados.append(estado)
+Local_Entrada = st.selectbox('Local de entrada', ['Clean Plastic', 'Clean Poa', 'Clean Jundiai', 'Clean Bottle', 'Clean Fortal', 'Raposo Plasticos', 'Raposo Minas', 'Fornecedor PF', 'Outro'])
 with col1:
-    cep_origem = st.text_input('CEP Origem', value=st.session_state.cep_origem)
-    cidade_origem = st.session_state.cidade_origem
-    uf_origem = st.session_state.uf_origem
+    estado_origem = st.selectbox('Selecione o estado de origem', estados)
+    municipios_origem = obter_municipios(estado_origem)
+    cidade_origem = st.selectbox('Selecione a cidade de origem', municipios_origem)
     
-    if st.button("Consultar Origem"):
-        cidade_origem, uf_origem = consulta_cep(cep_origem)
-        if cidade_origem is not None:
-            st.write('Cidade Origem:', cidade_origem)
-            st.session_state.cep_origem = cep_origem  # Armazena o valor do CEP de origem
-            st.session_state.cidade_origem = cidade_origem  # Armazena a cidade de origem
-            st.session_state.uf_origem = uf_origem  # Armazena a UF de origem
-
     nome_completo = st.text_input("Nome Completo:")
     tipo_veiculo = st.selectbox('Tipo de Veiculo:', ["Truck-Side", "Carreta-Side", "Truck-Grade Baixa", "Carreta-Grade Baixa", "Carreta Graneleira", "Container"])
     motivo = st.selectbox('Motivo:', ['Carregar', 'Descarregar'])
