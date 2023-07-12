@@ -41,6 +41,9 @@ with col1:
 
 with col2:
     empresa_origem = st.selectbox('Empresa Origem', ['Clean Plastic', 'Clean Poa', 'Clean Jundiai', 'Clean Bottle', 'Clean Fortal', 'Raposo Plasticos', 'Raposo Minas', 'Fornecedor PF', 'Outro'])
+    estado_origem = st.selectbox('Selecione o estado de origem', estados)
+    municipios_origem = obter_municipios(estado_origem)
+    cidade_origem = st.selectbox('Selecione a cidade de origem', municipios_origem)
     telefone = st.text_input('Telefone')
     placa = st.text_input('Placa do Veiculo:')
     frete_retono = st.selectbox('Possuem Frete Retorno?', ['Sim', 'Nao'])
