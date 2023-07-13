@@ -1,23 +1,7 @@
 import streamlit as st
 import sqlite3
 
-import streamlit as st
-import time
 
-# Definir o intervalo de atualização em segundos
-intervalo = 5
-
-# Função para atualizar a página
-def atualizar_pagina():
-    st.experimental_rerun()
-
-# Exibir um contador de tempo na página
-contador = 0
-while True:
-    st.write(f"Contador: {contador}")
-    time.sleep(intervalo)
-    contador += 1
-    atualizar_pagina()
 
 
 st.title('Gestao Entradas')
