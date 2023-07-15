@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import sqlite3
 import pandas as pd
-from . import maps
+
 
 st.set_page_config(page_title='easystems',page_icon='caixa-aberta.png')
 
