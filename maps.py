@@ -1,8 +1,8 @@
 import streamlit as st
 import folium
-from streamlit_folium import folium_static
 from geopy.geocoders import Nominatim
 import sqlite3
+from streamlit_folium import folium_static
 
 def geocode_address(address):
     geolocator = Nominatim(user_agent="my_geocoder")
@@ -35,8 +35,11 @@ def main():
         if latitude and longitude:
             folium.Marker(location=[latitude, longitude], popup=city).add_to(m)
 
-    # Exibir o mapa no Streamlit
-    folium_static(m)
+    # Obter o código HTML do mapa folium
+    folium_map = folium_static(m)
+
+    # Exibir o mapa como um HTML embutido usando a função st.markdown
+    st.markdown(folium_map, unsafe_allow_html=True)
 
 if __name__ == '__main__':
     main()
