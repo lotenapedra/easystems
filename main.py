@@ -6,7 +6,7 @@ st.set_page_config(page_title='easystems',page_icon='caixa-aberta.png')
 
 #
 # Side bar menu
-menu_option = st.sidebar.radio("Menu", ["Entrada", "Excluir Entrada","Visualizações","Requisição de Frete","Visualizar Requisicao"])
+menu_option = st.sidebar.radio("Menu", ["Entrada", "Excluir Entrada","Visualizações","Requisição de Frete","mapa"])
 
 if menu_option == "Entrada":
     exec(open("entrada.py").read())
@@ -23,8 +23,8 @@ if menu_option == "Visualizações":
 if menu_option == "Requisição de Frete":
    exec(open("valid_user_frete.py").read())
     
-if menu_option == "Visualizar Requisicao":
-    exec(open("visualizador_frete.py").read())
+if menu_option == "mapa":
+    exec(open("maps.py").read())
         
 
 if menu_option == "Cadastros":
