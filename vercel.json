@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "use": "@vercel/python",
+        "config": {
+          "maxLambdaSize": "2048mb"
+        }
+      }
+    ],
+    "routes": [
+      { "handle": "filesystem" },
+      { "src": "/(.*)", "dest": "streamlit_app.py" }
+    ]
+  }
+  
