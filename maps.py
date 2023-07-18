@@ -40,6 +40,3 @@ def main():
 
     # Exibir o mapa como um HTML embutido usando a função st.markdown
     st.markdown(folium_map, unsafe_allow_html=True)
-
-if __name__ == '__main__':
-    main()
